@@ -22,7 +22,7 @@ async function generateData(authorsAmount=10, booksAmount=100000) {
 
   while (authorIds.length < authorsAmount) {
     try {
-      const id = await Author.add({ name: generateString(5) });
+      const {id} = await Author.add({ name: generateString(5) });
       authorIds.push(id);
     } catch (e) {
       if (e.code === 'ER_DUP_ENTRY') {
@@ -35,7 +35,7 @@ async function generateData(authorsAmount=10, booksAmount=100000) {
 
   }
 
-  for (let i = 0; i <= booksAmount; i++) {
+  for (let i = 0; i < booksAmount; i++) {
     try {
       await Book.add({
         title: generateString(5),

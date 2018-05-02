@@ -15,7 +15,7 @@ app.use(indexRoutes.routes());
 app.use(booksRoutes.routes());
 
 const server = app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}`);
+  console.log(`Server listening on port: ${PORT}`); // eslint-disable-line no-console
 });
 
 module.exports = server;

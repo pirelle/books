@@ -6,11 +6,22 @@ function getByName(name) {
 
 async function add(author) {
   const response = await db.query(`INSERT INTO authors SET ?`, author);
-  return response.insertId;
+  return {
+    id: response.insertId,
+    name: author.name
+  };
 }
 
+async function getOrCreate(name) {
+  const author = await getByName(name);
+  if (author.length === 0) {
+    return add({ name });
+  }
+  return author;
+}
 
 module.exports = {
   add,
-  getByName
+  getByName,
+  getOrCreate
 };

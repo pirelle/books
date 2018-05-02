@@ -1,33 +1,52 @@
 const db = require('./connector');
 
 function all(offset, limit=30, orderby) {
-  let query = 'SELECT * FROM books';
+  let query = `
+    SELECT
+      b.id,
+      b.title,
+      b.description,
+      b.date,
+      b.image,
+      a.name as author_name
+    FROM books AS b
+    LEFT JOIN authors AS a
+    ON b.author_id = a.id`;
 
   if (orderby) {
-    query = `${query} order by ${orderby}`;
+    query = `${query} ORDER BY ${orderby}`;
   }
 
-  if (limit) {
-    query = `${query} limit ${limit}`;
-  }
+  query = `${query} LIMIT ${limit}`;
 
   if (offset) {
-    query = `${query} offset ${offset}`;
+    query = `${query} OFFSET ${offset}`;
   }
 
   return db.query(query);
 }
 
-function getBook(id) {
-  return db.query('SELECT * FROM books WHERE id=?', [id]);
+function getById(id) {
+  return db.query(`
+    SELECT
+      b.id,
+      b.title,
+      b.description,
+      b.date,
+      b.image,
+      a.name as author_name
+    FROM books AS b
+    LEFT JOIN authors AS a
+    ON b.author_id = a.id
+    WHERE id=?`, [id]);
 }
 
 async function add(book) {
-  const response = await db.query(`INSERT INTO books SET ?`, book);
+  const response = await db.query('INSERT INTO books SET ?', book);
   return response.insertId;
 }
 
-async function update(book) {
+async function update(book) {  // eslint-disable-line no-unused-vars
   const response = await db.query(`
     UPDATE book (author, date, description, image, title)
     VALUES (?, ?, ?, ?, ?)`,
@@ -37,6 +56,6 @@ async function update(book) {
 
 module.exports = {
   all,
-  getBook,
+  getById,
   add
 };

@@ -1,4 +1,5 @@
 const Books = require('../models/books');
+const Authors = require('../models/authors');
 const {handleFileUpload} = require('../utils.js');
 
 class BooksController {
@@ -13,7 +14,7 @@ class BooksController {
         data: books
       };
     } catch (err) {
-      console.log(err);
+      console.log(err); // eslint-disable-line no-console
       ctx.throw(500);
     }
   }
@@ -21,13 +22,13 @@ class BooksController {
 
   async getById (ctx) {
     try {
-      const book = await Books.getBook(ctx.params.id);
+      const book = await Books.getById(ctx.params.id);
       ctx.body = {
         status: 'success',
         data: book
       };
     } catch (err) {
-      console.log(err);
+      console.log(err); // eslint-disable-line no-console
       ctx.throw(500);
     }
   }
@@ -37,8 +38,10 @@ class BooksController {
     try {
       const url = handleFileUpload(ctx);
       const {author, date, description, title} = ctx.request.body;
+      // eslint-disable-next-line camelcase
+      const {id: author_id} = Authors.getOrCreate(author);
       const book = {
-        author,
+        author_id,
         date,
         description,
         title,
@@ -51,7 +54,7 @@ class BooksController {
         data: book
       };
     } catch (err) {
-      console.log(err);
+      console.log(err); // eslint-disable-line no-console
       ctx.throw(500);
     }
   }
@@ -79,7 +82,7 @@ class BooksController {
         data: book
       };
     } catch (err) {
-      console.log(err);
+      console.log(err); // eslint-disable-line no-console
       ctx.throw(500);
     }
   }
