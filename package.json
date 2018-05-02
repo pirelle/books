@@ -1,0 +1,34 @@
+{
+  "name": "testtask",
+  "version": "1.0.0",
+  "description": "",
+  "main": "my-koa-app.js",
+  "dependencies": {
+    "koa": "^2.5.1",
+    "koa-router": "^7.4.0",
+    "koa-static": "^4.0.2",
+    "koa2-formidable": "^1.0.2",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
+    "mocha": "^5.1.1"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/_mocha",
+    "start": "node ./src/server/index.js",
+    "lint": "./node_modules/eslint/bin/eslint.js src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "asdf"
+  },
+  "author": "",
+  "license": "ISC"
+}

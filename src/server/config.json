@@ -1,0 +1,16 @@
+{
+  "database": {
+    "development": {
+      "host": "localhost",
+      "user": "testtask",
+      "password": "testtask",
+      "database": "testtask"
+    },
+    "test": {
+      "host": "localhost",
+      "user": "testtask",
+      "password": "testtask",
+      "database": "testtask"
+    }
+  }
+}
