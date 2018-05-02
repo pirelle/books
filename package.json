@@ -23,7 +23,9 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha",
     "start": "node ./src/server/index.js",
-    "lint": "./node_modules/eslint/bin/eslint.js src/"
+    "lint": "./node_modules/eslint/bin/eslint.js src/ bin/ test/",
+    "initTables": "node ./bin/initTables.js",
+    "generateData": "node ./bin/generateData.js"
   },
   "repository": {
     "type": "git",
