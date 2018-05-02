@@ -1,5 +1,5 @@
 const Router = require('koa-router');
-const BooksController = require('../controllers/books.js');
+const BooksController = require('../controllers/books');
 
 const router = new Router();
 const BASE_URL = '/api/v1/books';

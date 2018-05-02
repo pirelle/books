@@ -6,7 +6,7 @@ function handleFileUpload(ctx) {
   const ext = path.extname(file.name);
   const basename = path.basename(file.path);
   const url = `/media/${basename}${ext}`;
-  const fullpath = path.join(__dirname, '../public', url);
+  const fullpath = path.join(__dirname, './public', url);
   fs.createReadStream(file.path).pipe(fs.createWriteStream(fullpath));
   return url;
 }

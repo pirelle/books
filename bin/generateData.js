@@ -2,9 +2,9 @@
 /* eslint no-await-in-loop: 0 */
 /* eslint no-plusplus: 0 */
 /* eslint no-continue: 0 */
-const db = require('../src/server/models/connector.js');
-const Book = require('../src/server/models/books.js');
-const Author = require('../src/server/models/authors.js');
+const db = require('../src/server/models/connector');
+const Book = require('../src/server/models/books');
+const Author = require('../src/server/models/authors');
 
 function generateString(len=10) {
   return Math.random().toString(36).substring(len);
@@ -42,7 +42,7 @@ async function generateData(authorsAmount=10, booksAmount=100000) {
         description: generateString(15),
         image: generateString(15),
         date: generateDate(),
-        author_id: authorIds[Math.floor(Math.random()*9)]
+        author_id: authorIds[Math.floor(Math.random()*(authorsAmount-1))]
       });
     } catch (e) {
       if (e.code === 'ER_DUP_ENTRY') {
@@ -53,15 +53,22 @@ async function generateData(authorsAmount=10, booksAmount=100000) {
         process.exit(1);
       }
     }
-    process.stdout.write(`Created ${i}\r`);
+    if (require.main === module) {
+      process.stdout.write(`Created ${i}\r`);
+    }
   }
-  process.stdout.write('\nDone\n');
+  if (require.main === module) {
+    process.stdout.write('\nDone\n');
+  }
+}
 
+async function _generateData() {
+  await generateData();
   db.end();
 }
 
 if (require.main === module) {
-  generateData();
+  _generateData();
 }
 
 module.exports = generateData;

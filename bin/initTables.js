@@ -1,5 +1,5 @@
 /* eslint no-console: 0 */
-const db = require('../src/server/models/connector.js');
+const db = require('../src/server/models/connector');
 
 const author = `
   CREATE TABLE authors (

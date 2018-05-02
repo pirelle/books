@@ -38,7 +38,7 @@ function getById(id) {
     FROM books AS b
     LEFT JOIN authors AS a
     ON b.author_id = a.id
-    WHERE id=?`, [id]);
+    WHERE b.id=?`, [id]);
 }
 
 async function add(book) {
@@ -49,8 +49,9 @@ async function add(book) {
 async function update(book) {  // eslint-disable-line no-unused-vars
   const response = await db.query(`
     UPDATE book (author, date, description, image, title)
-    VALUES (?, ?, ?, ?, ?)`,
-  [book.author, book.date, book.description, book.image, book.title]);
+    VALUES (?, ?, ?, ?, ?)
+    WHERE id=?`,
+  [book.author, book.date, book.description, book.image, book.title, book.id]);
   return response.insertId;
 }
 

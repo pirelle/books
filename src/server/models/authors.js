@@ -1,7 +1,15 @@
 const db = require('./connector');
 
-function getByName(name) {
-  return db.query('SELECT * FROM authors WHERE name=?', [name]);
+async function getByName(name) {
+  const author = await db.query('SELECT * FROM authors WHERE name=?', [name]);
+  if (author.length === 1) {
+    return author[0];
+  }
+  return author;
+}
+
+function all() {
+  return db.query('SELECT * FROM authors');
 }
 
 async function add(author) {
@@ -13,14 +21,15 @@ async function add(author) {
 }
 
 async function getOrCreate(name) {
-  const author = await getByName(name);
+  let author = await getByName(name);
   if (author.length === 0) {
-    return add({ name });
+    author = await add({ name });
   }
   return author;
 }
 
 module.exports = {
+  all,
   add,
   getByName,
   getOrCreate
