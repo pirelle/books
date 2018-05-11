@@ -6,8 +6,8 @@ class BooksController {
 
   async all(ctx) {
     try {
-      const {offset, limit, order} = ctx.request.query;
-      const books = await Books.all(offset, limit, order);
+      const {offset, limit, order, groupby} = ctx.request.query;
+      const books = await Books.all(offset, limit, order, groupby);
       ctx.body = {
         status: 'success',
         data: books

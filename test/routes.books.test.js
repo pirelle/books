@@ -43,6 +43,40 @@ describe('routes : books', () => {
     });
   });
 
+  describe('GET /api/v1/books?groupby=author', () => {
+    it('should return all books grouped by author', (done) => {
+      chai.request(server)
+        .get('/api/v1/books?groupby=author')
+        .end((err, res) => {
+          should.not.exist(err);
+          res.status.should.equal(200);
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('success');
+          res.body.data[0].should.include.keys(
+            'author_name', 'dates', 'descriptions', 'images', 'titles'
+          );
+          done();
+        });
+    });
+  });
+
+  describe('GET /api/v1/books?groupby=date', () => {
+    it('should return all books grouped by date', (done) => {
+      chai.request(server)
+        .get('/api/v1/books?groupby=date')
+        .end((err, res) => {
+          should.not.exist(err);
+          res.status.should.equal(200);
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('success');
+          res.body.data[0].should.include.keys(
+            'authors', 'date', 'descriptions', 'images', 'titles'
+          );
+          done();
+        });
+    });
+  });
+
   describe('GET /api/v1/books/:id', () => {
     it('should respond with a single book', (done) => {
       chai.request(server)
