@@ -45,6 +45,11 @@ function buildQueryGroupedDate() {
 function all(offset, limit=30, orderby, groupby) {
   let query;
 
+  offset = db.escape(offset);
+  limit = parseInt(db.escape(limit));
+  orderby = db.escape(orderby);
+  groupby = db.escape(groupby);
+
   if (limit > 30) {
     limit = 30;
   }
