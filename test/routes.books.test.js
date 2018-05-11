@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 describe('routes : books', () => {
 
-  let bookIds;//, authorIds;
+  let bookIds;
 
   beforeEach(async () => {
     await generateData(2, 5);
@@ -83,28 +83,29 @@ describe('routes : books', () => {
     });
   });
 
-  // describe('PUT /api/v1/books', () => {
-  //   it('should return the book that was updated', (done) => {
-  //     chai.request(server)
-  //       .put(`/api/v1/books/${bookIds[0]}`)
-  //       .set('Content-Type','multipart/form-data')
-  //       // .attach('file', readFileSync('test/file.test'), 'file.test')
-  //       .field('author', 'Max')
-  //       .field('date', '2018-11-10')
-  //       .field('description', 'Descriptione')
-  //       .field('title', 'Title of the book')
-  //       .end((err, res) => {
-  //         should.not.exist(err);
-  //         res.status.should.equal(201);
-  //         res.type.should.equal('application/json');
-  //         res.body.status.should.eql('success');
-  //         res.body.data.should.include.keys(
-  //           'id', 'author', 'date', 'description', 'image', 'title'
-  //         );
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('PUT /api/v1/books', () => {
+    it('should return the book that was updated', (done) => {
+      chai.request(server)
+        .put(`/api/v1/books/${bookIds[0]}`)
+        .set('Content-Type','multipart/form-data')
+        .attach('file', readFileSync('test/file.test'), 'file.test')
+        .field('author', 'Max1')
+        .field('date', '2018-11-10')
+        .field('description', 'Descriptione')
+        .field('title', 'Title of the book')
+        .end((err, res) => {
+          should.not.exist(err);
+          res.status.should.equal(201);
+          res.type.should.equal('application/json');
+          res.body.status.should.eql('success');
+          res.body.data.should.include.keys(
+            'id', 'author_name', 'date', 'description', 'image', 'title'
+          );
+          res.body.data.author_name.should.eql('Max1');
+          done();
+        });
+    });
+  });
 
   afterEach(async () => {
     await db.query('DELETE FROM authors');

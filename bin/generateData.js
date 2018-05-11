@@ -62,7 +62,7 @@ async function generateData(authorsAmount=10, booksAmount=100000) {
   }
 }
 
-async function _generateData() {
+async function _generateData() { // eslint-disable-line no-underscore-dangle
   await generateData();
   db.end();
 }

@@ -46,17 +46,25 @@ async function add(book) {
   return response.insertId;
 }
 
-async function update(book) {  // eslint-disable-line no-unused-vars
+async function update(book) {
+  const fields = [];
+  const allowedFields = ['author_id', 'date', 'description', 'title', 'image'];
+  allowedFields.forEach((key) => {
+    fields.push(`${key}=${db.escape(book[key])}`);
+  });
+  const setString = fields.join(',');
+
   const response = await db.query(`
-    UPDATE book (author, date, description, image, title)
-    VALUES (?, ?, ?, ?, ?)
+    UPDATE books
+    SET ${setString}
     WHERE id=?`,
-  [book.author, book.date, book.description, book.image, book.title, book.id]);
+  [book.id]);
   return response.insertId;
 }
 
 module.exports = {
   all,
   getById,
-  add
+  add,
+  update
 };

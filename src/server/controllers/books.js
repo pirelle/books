@@ -63,19 +63,23 @@ class BooksController {
     try {
       let url = null;
       if (ctx.request.files.file) {
-        url = handleFileUpload(ctx.request.files.file);
+        url = handleFileUpload(ctx);
       }
 
-      const {id, author, date, description, title} = ctx.request.body;
+      const {author, date, description, title} = ctx.request.body;
+      const {id} = ctx.params;
+      const {id: author_id} = await Authors.getOrCreate(author); // eslint-disable-line camelcase
       const book = {
         id,
-        author,
+        author_id,
         date,
         description,
         title,
         image: url
       };
       await Books.update(book);
+      book.author_name = author;
+      delete book.author_id;
       ctx.status = 201;
       ctx.body = {
         status: 'success',

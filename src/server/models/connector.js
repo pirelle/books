@@ -18,6 +18,10 @@ class Database {
     });
   }
 
+  escape (str) {
+    return this.connection.escape(str);
+  }
+
   end () {
     return this.connection.end();
   }
